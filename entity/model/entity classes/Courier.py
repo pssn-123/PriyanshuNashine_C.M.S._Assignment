@@ -45,6 +45,35 @@ class Courier:
         self.__userID = userid
 
     # getters
+    def get_courierid(self):
+        return self.__courierID
+
+    def get_sendername(self):
+        return self.__senderName
+
+    def get_senderaddress(self):
+        return self.__senderAddress
+
+    def get_receivername(self):
+        return self.__receiverName
+
+    def get_receiveraddress(self):
+        return self.__receiverAddress
+
+    def get_weight(self):
+        return self.__weight
+
+    def get_status(self):
+        return self.__status
+
+    def get_trackingnumber(self):
+        return self.__tarckingNumber
+
+    def get_deliverydate(self):
+        return self.__deliveryDate
+
+    def get_userid(self):
+        return self.__userID
 
 '''
     # default constructor
