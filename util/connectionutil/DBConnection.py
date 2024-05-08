@@ -9,11 +9,12 @@ class DBConnection:
 
             if conn.is_connected():
                 print("Database is connected:")
-            else:
-                print("Not connected with Database:")
+                return conn
+
         except Exception as e:
             print(str(e)+"---Database is not connected---")
-        return conn
+
+
 
     def close(self):
         self.conn.close()
