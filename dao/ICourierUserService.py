@@ -1,19 +1,20 @@
 from abc import ABC, abstractmethod
 
+
 class ICourierUserService(ABC):
     @abstractmethod
-    def placeOrder(self, courier):
+    def place_order(self, courier_obj):
         pass
 
     @abstractmethod
-    def getOrderStatus(self):
+    def get_order_status(self, tracking_number):
         pass
 
     @abstractmethod
-    def cancleOrder(self):
+    def cancel_order(self,tracking_number):
         pass
 
     @abstractmethod
-    def getAssignedOrder(self):
+    def get_assigned_order(self, courier_staff_id):
         pass
 

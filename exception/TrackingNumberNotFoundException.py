@@ -1,10 +1,10 @@
 class TrackingNumberNotFoundException(Exception):
-    def __init__(self, msg):
-        super().__init__(msg)
+    def __init__(self, msg = 'Tracking number not found '):
+        self.msg = msg
+        super().__init__(self.msg)
 
 try:
-    raise TrackingNumberNotFoundException("The tracking number does not exist")
-
+    pass
 except TrackingNumberNotFoundException as e:
     print(e)
 

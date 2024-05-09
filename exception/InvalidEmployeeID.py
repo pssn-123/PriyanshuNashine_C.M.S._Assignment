@@ -1,9 +1,9 @@
 class InvalidEmployeeID(Exception):
-    def __init__(self, msg):
-        super().__init__(msg)
+    def __init__(self, msg = 'The Entered EmployeeId id Invalid'):
+        self.msg = msg
+        super().__init__(self.msg)
 
 try:
-    raise InvalidEmployeeID('Invalid EmployeeID: ')
 
 except InvalidEmployeeID as e:
     print(e)
