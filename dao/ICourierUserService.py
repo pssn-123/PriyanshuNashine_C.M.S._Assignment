@@ -1,9 +1,10 @@
 from abc import ABC, abstractmethod
+from entity.model.Courier import *
 
 
 class ICourierUserService(ABC):
     @abstractmethod
-    def place_order(self, courier_obj):
+    def insert_order(self, courier:Courier)-> bool:
         pass
 
     @abstractmethod
@@ -15,6 +16,6 @@ class ICourierUserService(ABC):
         pass
 
     @abstractmethod
-    def get_assigned_order(self, courier_staff_id):
+    def get_assigned_orders(self, courier_staff_id):
         pass
 

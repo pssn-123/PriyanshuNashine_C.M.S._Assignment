@@ -1,11 +1,12 @@
 from dao.ICourierUserService import *
+from entity.model.Courier import *
 
 
 class CourierUserServiceImpl(ICourierUserService):
     def __init__(self, company_obj):
         self.__company_obj = company_obj
 
-    def place_order(self, courier_obj):
+    def insert_order(self, courier:Courier)-> bool:
         self.__company_obj.get_courierDetails().append(courier_obj)
         print("Order placed successfully.")
 
@@ -25,7 +26,7 @@ class CourierUserServiceImpl(ICourierUserService):
                 return
         print("Order not found")
 
-    def get_assigned_order(self, courier_staff_id):
+    def get_assigned_orders(self, courier_staff_id):
         # Logic to get assigned orders for a staff member
         assigned_orders = []
         for courier in self.__company_obj.get_courierDetails():

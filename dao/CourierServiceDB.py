@@ -1,39 +1,45 @@
 from util.connectionutil.DBConnection import *
+from entity.model.Courier import *
+from dao.ICourierUserService import *
 
 
-class CourierServiceDb:
+class CourierServiceDb(ICourierUserService, Courier):
     def __init__(self):
         self.connection = DBConnection.getConnection()
 
     @staticmethod
-    def insert_order(self, courier_obj):
+    def insert_order(courier:Courier)-> bool:
         try:
-            if self.connection:
-                cursor = self.connection.cursor()
-                query = "INSERT INTO Courier (SenderName, SenderAddress, ReceiverName, ReceiverAddress, Weight, " \
+            connection = DBConnection.getConnection()
+            if connection:
+                cursor = connection.cursor()
+                query = "INSERT INTO Couriers (UserID, SenderName, SenderAddress, ReceiverName, ReceiverAddress, Weight, " \
                         "Status, TrackingNumber, DeliveryDate) " \
-                        "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
-                data = (courier_obj.sender_name, courier_obj.sender_address, courier_obj.receiver_name,
-                        courier_obj.receiver_address, courier_obj.weight, courier_obj.status,
-                        courier_obj.tracking_number, courier_obj.delivery_date)
+                        "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+                data = [courier.get_userid(), courier.get_sendername(), courier.get_senderaddress(),
+                        courier.get_receivername(), courier.get_receiveraddress(), courier.get_weight(),
+                        courier.get_status(), courier.get_trackingnumber(), courier.get_deliverydate()
+                        ]
                 cursor.execute(query, data)
-                self.connection.commit()
-                print("Order inserted successfully.")
+                connection.commit()
+                return True
                 cursor.close()
-                self.connection.close()
+                connection.close()
         except Exception as e:
             print("Error while inserting order:", e)
+            return False
 
     @staticmethod
-    def get_order_status(self, tracking_number):
+    def get_order_status(tracking_number):
         try:
-            if self.connection:
-                cursor = self.connection.cursor()
-                query = "SELECT Status FROM Courier WHERE TrackingNumber = %s"
-                cursor.execute(query, (tracking_number,))
+            connection = DBConnection.getConnection()
+            if connection:
+                cursor = connection.cursor()
+                query = "SELECT Status FROM Couriers WHERE TrackingNumber = %s"
+                cursor.execute(query,(tracking_number,))
                 result = cursor.fetchone()
                 cursor.close()
-                self.connection.close()
+                connection.close()
                 if result:
                     return result[0]
                 else:
@@ -43,16 +49,17 @@ class CourierServiceDb:
             return "Error"
 
     @staticmethod
-    def cancel_order(self, tracking_number):
+    def cancel_order(tracking_number):
+        connection = DBConnection.getConnection()
         try:
-            if self.connection:
-                cursor = self.connection.cursor()
-                query = "UPDATE Courier SET Status = 'Cancelled' WHERE TrackingNumber = %s"
+            if connection:
+                cursor = connection.cursor()
+                query = "UPDATE Couriers SET Status = 'Cancelled' WHERE TrackingNumber = %s"
                 cursor.execute(query, (tracking_number,))
-                self.connection.commit()
+                connection.commit()
                 affected_rows = cursor.rowcount
                 cursor.close()
-                self.connection.close()
+                connection.close()
                 if affected_rows > 0:
                     print("Order cancelled successfully.")
                 else:
@@ -99,4 +106,29 @@ class CourierServiceDb:
         except Exception as e:
             print(f"Error retrieving delivery history: {e}")
 
+    def show_couriers(self):
+        cursor = self.connection.cursor()
+        query = 'Select * from couriers'
+        cursor.execute(query)
+        couriers = cursor.fetchall()
+        self.connection.commit()
+        for courier in couriers:
+            print(courier)
 
+    def show_employees(self):
+        cursor = self.connection.cursor()
+        query = 'Select * from employee'
+        cursor.execute(query)
+        employees = cursor.fetchall()
+        self.connection.commit()
+        for employee in employees:
+            print(employee)
+
+    def show_users(self):
+        cursor = self.connection.cursor()
+        query = 'Select * from users'
+        cursor.execute(query)
+        users = cursor.fetchall()
+        self.connection.commit()
+        for user in users:
+            print(user)

@@ -1,4 +1,4 @@
-from dao import CourierUserServiceImpl
+from dao.CourierUserServiceImpl import *
 from dao.ICourierAdminService import *
 
 

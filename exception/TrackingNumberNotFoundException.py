@@ -3,9 +3,6 @@ class TrackingNumberNotFoundException(Exception):
         self.msg = msg
         super().__init__(self.msg)
 
-try:
-    pass
-except TrackingNumberNotFoundException as e:
-    print(e)
+
 
 

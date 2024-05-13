@@ -2,7 +2,7 @@ class PropertyUtil:
     @staticmethod
     def getPropertyString():
         host = 'localhost'
-        database = 'cars'
+        database = 'couriermanagementsystem'
         user = 'root'
         password = 'Priyanshu2003'
         return host, database, user, password
