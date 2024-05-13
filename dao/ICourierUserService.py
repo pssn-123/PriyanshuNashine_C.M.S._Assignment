@@ -1,19 +1,21 @@
 from abc import ABC, abstractmethod
+from entity.model.Courier import *
+
 
 class ICourierUserService(ABC):
     @abstractmethod
-    def placeOrder(self, courier):
+    def insert_order(self, courier:Courier)-> bool:
         pass
 
     @abstractmethod
-    def getOrderStatus(self):
+    def get_order_status(self, tracking_number):
         pass
 
     @abstractmethod
-    def cancleOrder(self):
+    def cancel_order(self,tracking_number):
         pass
 
     @abstractmethod
-    def getAssignedOrder(self):
+    def get_assigned_orders(self, courier_staff_id):
         pass
 

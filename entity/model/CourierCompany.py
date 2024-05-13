@@ -1,11 +1,11 @@
 class CourierCompany:
 
     # parameterized constructor
-    def __init__(self, courierid, courierdetails, employeedetails, locationdetails):
-        self.__courierID = courierid
-        self.__courierDetails = courierdetails
-        self.__employeeDetails = employeedetails
-        self.__locationDetails = locationdetails
+    def __init__(self, companyname):
+        self.__companyName = companyname
+        self.__courierDetails = []
+        self.__employeeDetails = []
+        self.__locationDetails = []
 
     # setters
     def set_courierId(self, courierId):

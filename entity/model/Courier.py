@@ -1,8 +1,8 @@
 class Courier:
 
     # parameterized constructor
-    def __init__(self, courierid, sendername, senderaddress, receivername, receiveraddress, weight, status, trackingnumber, deliverydate, userid):
-        self.__courierID = courierid
+    def __init__(self, userid, sendername, senderaddress, receivername, receiveraddress, weight, status, trackingnumber, deliverydate):
+        self.__userID = userid
         self.__senderName = sendername
         self.__senderAddress = senderaddress
         self.__receiverName = receivername
@@ -11,7 +11,7 @@ class Courier:
         self.__status = status
         self.__tarckingNumber = trackingnumber
         self.__deliveryDate = deliverydate
-        self.__userID = userid
+
 
     # setters
     def set_courierid(self,courierid):

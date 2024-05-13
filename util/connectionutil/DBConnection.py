@@ -1,33 +1,11 @@
 import mysql.connector as sql
+from util.connectionutil.PropertyUtil import *
+
 
 class DBConnection:
-
+    conn = ''
     @staticmethod
-    def getConnection(self):
-        try:
-            conn = sql.connect(host='localhost', database = 'cms2', user = 'root', password = 'Priyanshu2003')
-
-            if conn.is_connected():
-                print("Database is connected:")
-                return conn
-
-        except Exception as e:
-            print(str(e)+"---Database is not connected---")
-
-
-
-    def close(self):
-        self.conn.close()
-
-
-
-
-
-
-
-
-
-
-
-
-
+    def getConnection():
+        l = PropertyUtil.getPropertyString()
+        conn = sql.connect(host=l[0], database=l[1], user=l[2], password=l[3])
+        return conn
