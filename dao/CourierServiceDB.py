@@ -1,14 +1,17 @@
 from util.connectionutil.DBConnection import *
 from entity.model.Courier import *
+from entity.model.Employee import *
 from dao.ICourierUserService import *
+from dao.ICourierAdminService import *
+from exception.InvalidEmployeeID import *
 
 
-class CourierServiceDb(ICourierUserService, Courier):
+class CourierServiceDb(ICourierUserService, Courier, ICourierAdminService, Employee):
     def __init__(self):
         self.connection = DBConnection.getConnection()
 
     @staticmethod
-    def insert_order(courier:Courier)-> bool:
+    def insert_order(courier: Courier) -> bool:
         try:
             connection = DBConnection.getConnection()
             if connection:
@@ -36,7 +39,7 @@ class CourierServiceDb(ICourierUserService, Courier):
             if connection:
                 cursor = connection.cursor()
                 query = "SELECT Status FROM Couriers WHERE TrackingNumber = %s"
-                cursor.execute(query,(tracking_number,))
+                cursor.execute(query, (tracking_number,))
                 result = cursor.fetchone()
                 cursor.close()
                 connection.close()
@@ -132,3 +135,45 @@ class CourierServiceDb(ICourierUserService, Courier):
         self.connection.commit()
         for user in users:
             print(user)
+
+    def add_courier_staff(employee: Employee) -> bool:
+        try:
+            connection = DBConnection.getConnection()
+            if connection:
+                cursor = connection.cursor()
+                query = "INSERT INTO Employee (Name, Email, ContactNumber, Role, Salary) VALUES (%s, %s, %s, %s, %s)"
+                data = [employee.get_employeename(), employee.get_email(), employee.get_contactnumber(),
+                        employee.get_role(), employee.get_salary()]
+                cursor.execute(query, data)
+                connection.commit()
+                return True
+                cursor.close()
+                connection.close()
+        except Exception as e:
+            print('Error', e)
+            return False
+
+    def update_employee(employee_id, role):
+        try:
+            connection = DBConnection.getConnection()
+            if connection:
+                cursor = connection.cursor()
+                query = 'Update Employee set Role = %s where employeeid = %s'
+                cursor.execute(query, (role, employee_id,))
+                connection.commit()
+        except InvalidEmployeeID as e:
+            print("Error :", e)
+
+    def delete_employee(employee_id):
+        try:
+            connection = DBConnection.getConnection()
+            if connection:
+                cursor = connection.cursor()
+                query = 'Delete from employee where employeeid = %s'
+                cursor.execute( query, employee_id)
+                cursor.commit()
+                return True
+        except InvalidEmployeeID as e:
+            print("Error :", e)
+            return False
+

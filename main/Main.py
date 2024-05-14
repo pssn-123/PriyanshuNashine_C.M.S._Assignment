@@ -77,18 +77,35 @@ class Main_module(CourierServiceDb):
                     Main_module.admin_menu()
                     option = input("Enter the Operation Number \n:")
                     if option == '1':
-                        employee_name = input("Enter Employee Name :")
-                        email = input("Enter E-mail ID :")
-                        mobile_number = input("Enter Mobile No. :")
-                        role = input("Enter Employee's Role :")
-                        salary = input("Enter Employee's Salary :")
-                        employee = Employee(employee_name, email, mobile_number, role, salary)
+                        try:
+                            employee_name = input("Enter Employee Name :")
+                            email = input("Enter E-mail ID :")
+                            mobile_number = input("Enter Mobile No. :")
+                            role = input("Enter Employee's Role :")
+                            salary = input("Enter Employee's Salary :")
+                            employee = Employee(employee_name, email, mobile_number, role, salary)
+                            print(employee)
+                            courier_service.add_courier_staff(employee)
+                        except Exception as e:
+                            print("Error :", e)
 
                     elif option == '2':
-                        pass
-                    elif option == '3':
-                        pass
+                        try:
+                            emloyee_id = input("Enter the employee ID :")
+                            role = input("Enter the updated role of the employee :")
+                            courier_service.update_employee(emloyee_id, role)
+                        except Exception as e:
+                            print("Error :", e)
 
+                    elif option == '3':
+                        try:
+                            employee_id = input("Enter the employee ID :")
+                            deleted = courier_service.delete_employee(employee_id)
+                            if deleted:
+                                print(f"Successfully deleted Employee with employee id{employee_id}")
+                                courier_service.show_employees()
+                        except Exception as e:
+                            print("Error :", e)
 
 
 if __name__ == "__main__":
